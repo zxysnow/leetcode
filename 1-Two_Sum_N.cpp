@@ -7,7 +7,7 @@ public:
             m[numbers[i]] = i;
         for(int i=0; i<numbers.size(); i++) {
             int other = target - numbers[i];
-            auto it = m.find(other);
+            map<int, int>::iterator it = m.find(other);
             if( it != m.end() && it->second != i ) {
                 ans.push_back(i + 1);
                 ans.push_back(it->second + 1);
