@@ -5,6 +5,7 @@ public:
         map<int, int> m;
         for(int i=0; i<numbers.size(); i++)
             m[numbers[i]] = i;
+
         for(int i=0; i<numbers.size(); i++) {
             int other = target - numbers[i];
             map<int, int>::iterator it = m.find(other);
