@@ -12,6 +12,7 @@ public:
         int carry = 0;
         ListNode *ans = new ListNode(0);
         ListNode *head = ans;
+
         while( l1 || l2 || carry ) {
             int num = -1;
             if( l1 ) {
