@@ -1,10 +1,8 @@
 class Solution {
 public:
     vector<int> twoSum(vector<int> &numbers, int target) {
-        
 		vector<int> ans;
-        vector< pair<int, int> > p;
-
+		vector< pair<int, int> > p;
         for(int i=0; i<numbers.size(); i++)
             p.push_back(make_pair(numbers[i], i + 1));
         sort(p.begin(), p.end());
