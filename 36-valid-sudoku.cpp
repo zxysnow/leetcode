@@ -8,6 +8,7 @@ public:
         memset(used_r, 0, sizeof(used_r));
         memset(used_c, 0, sizeof(used_c));
         memset(used_9, 0, sizeof(used_9));
+
         for (int i = 0; i < board.size(); i++) {
             for (int k = 0; k < board[i].size(); k++) {
                 char ch = board[i][k];
