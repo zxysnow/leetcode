@@ -17,6 +17,7 @@ public:
         priority_queue<ListNode*, vector<ListNode*>, cmp> q;
         ListNode ans = ListNode(0);
         ListNode* ahead = &ans;
+
         for (int i = 0; i < lists.size(); i++) {
             if (lists[i])
                 q.push(lists[i]);
