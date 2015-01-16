@@ -11,6 +11,7 @@ public:
     bool hasCycle(ListNode *head) {
         if (head == NULL)
             return false;
+
         ListNode *p1 = head, *p2 = head;
         while (p2 && p2->next) {
             p1 = p1->next;
