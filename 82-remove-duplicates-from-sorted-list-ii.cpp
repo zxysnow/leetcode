@@ -8,24 +8,21 @@
  */
 class Solution {
 public:
-    ListNode *deleteDuplicates(ListNode *head) {
-        if( head == NULL )
-            return head;
-        ListNode* ans = new ListNode(0);
-        ans->next = head;
-        ListNode* pre = ans;
-        ListNode* cur = head;
-        while( cur ) {
-            while( cur->next && cur->next->val == pre->next->val ) {
-                cur = cur->next;
-            }
-            if( pre->next == cur ) {
-                pre = pre->next;
+    ListNode * deleteDuplicates(ListNode *head) {
+        ListNode ans(0);
+        ans.next = head;
+        ListNode *pre = &ans;
+        while (pre->next) {
+            head = pre->next;
+            int now = head->val;
+            if (head->next && head->next->val == now) {
+                while (head->next && head->next->val == now)
+                    head = head->next;
+                pre->next = head->next;
             } else {
-                pre->next = cur->next;
+                pre = pre->next;
             }
-            cur = cur->next;
         }
-        return ans->next;
+        return ans.next;
     }
 };
