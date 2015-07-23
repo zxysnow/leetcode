@@ -9,28 +9,19 @@
 class Solution {
 public:
     ListNode *partition(ListNode *head, int x) {
-        ListNode ans = ListNode(0);
-        ans.next = head;
-        ListNode *tail = &ans, *p = NULL;
-        if (head == NULL)
-            return head;
-        while (tail->next != NULL && tail->next->val < x)
-                tail = tail->next;
-        if (tail->next == NULL)
-            return head;
-        p = tail;
-        while (p && p->next != NULL) {
-            if (p->next->val < x && p->next != tail->next) {
-                ListNode *t = tail->next;
-                tail->next = p->next;
-                p->next = p->next->next;
-                tail = tail->next;
-                tail->next = t;
+        ListNode left(0), right(0);
+        ListNode *lp = &left, *rp = &right;
+        for (; head; head = head->next) {
+            if (head->val < x) {
+                lp->next = head;
+                lp = lp->next;
             } else {
-                p = p->next;
+                rp->next = head;
+                rp = rp->next;
             }
         }
-        
-        return ans.next;
+        rp->next = NULL;
+        lp->next = right.next;
+        return left.next;
     }
 };

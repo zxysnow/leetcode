@@ -1,44 +1,34 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
 class Solution {
 public:
+    /**
+     * @param head: The first node of linked list.
+     * @return: void
+     */
     void reorderList(ListNode *head) {
-        int cnt = 0;
-        for (ListNode *p = head; p; p = p->next)
-            cnt++;
-        if (cnt <= 2)
+        if (head == NULL || head->next == NULL)
             return ;
-        int k = (cnt - 1) / 2;
-        ListNode *p = head;
-        while (k--) {
-            p = p->next;
+        ListNode *slow = head, *fast = head;
+        while (fast->next && fast->next->next) {
+            slow = slow->next;
+            fast = fast->next->next;
         }
-        ListNode *tail = p->next;
-        while (tail->next) {
-            ListNode *t = tail->next->next;
-            tail->next->next = p->next;
-            p->next = tail->next;
-            tail->next = t;
+        ListNode *t = slow->next;
+        ListNode *right = NULL;
+        while (t) {
+            ListNode *p = t->next;
+            t->next = right;
+            right = t;
+            t = p;
         }
-        
-        tail = p;
-        p = head;
-        while (tail->next) {
-            if (tail->next == p->next) {
-                tail = tail->next;
-                continue;
-            }
-            ListNode *t = tail->next->next;
-            tail->next->next = p->next;
-            p->next = tail->next;
-            tail->next = t;
-            p = p->next->next;
+        slow->next = NULL;
+        t = head;
+        while (right) {
+            ListNode *p = t->next;
+            t->next = right;
+            right = right->next;
+            t->next->next = p;
+            t = t->next->next;
         }
     }
 };
+
