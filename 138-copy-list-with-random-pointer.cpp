@@ -1,37 +1,26 @@
-/**
- * Definition for singly-linked list with a random pointer.
- * struct RandomListNode {
- *     int label;
- *     RandomListNode *next, *random;
- *     RandomListNode(int x) : label(x), next(NULL), random(NULL) {}
- * };
- */
 class Solution {
 public:
     RandomListNode *copyRandomList(RandomListNode *head) {
         if (head == NULL)
             return NULL;
-        RandomListNode ans = RandomListNode(0);
-        RandomListNode *p, *t;
-        for (t = head; t != NULL;) {
-            p = new RandomListNode(t->label);
-            if (ans.next == NULL)
-                ans.next = p;
-            p->next = t->next;
-            t->next = p;
-            t = t->next->next;
+        RandomListNode *cp = NULL;
+        RandomListNode *p = head;
+        for (p = head; p;) {
+            RandomListNode *t = new RandomListNode(p->label);
+            t->next = p->next;
+            p->next = t;
+            p = p->next->next;
         }
-        for (t = head; t != NULL;) {
-            t->next->random = t->random == NULL ? NULL : t->random->next;
-            t = t->next->next;
+        cp = head->next;
+        for (p = head; p;) {
+            p->next->random = p->random ? p->random->next : NULL;
+            p = p->next->next;
         }
-        for (t = head; t != NULL;) {
-            p = t->next;
-            t->next = t->next->next;
-            p->next = t->next == NULL ? NULL : t->next->next;
-            t = t->next;
+        for (p = head; p; p = p->next) {
+            RandomListNode *t = p->next;
+            p->next = p->next->next;
+            t->next = p->next == NULL ? NULL : p->next->next;
         }
-
-        return ans.next;
+        return cp;
     }
 };
