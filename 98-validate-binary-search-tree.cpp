@@ -10,31 +10,15 @@
 class Solution {
 public:
     bool isValidBST(TreeNode *root) {
-        long long x = INT_MIN - 1ll;
-        return isValid(root, x);
+        return isValid(root, INT_MIN - 1ll, INT_MAX + 1ll);
     }
-private:
-    bool isValid(TreeNode *root, long long &pre) {
+    
+private :
+    bool isValid(TreeNode *root, long long min_val, long long max_val) {
         if (root == NULL)
             return true;
-        if (root->left == NULL && root->right == NULL) {
-            if (root->val <= pre)
-                return false;
-            pre = root->val;
-            return true;
-        }
-        bool ans = true;
-        if (root->left) {
-            ans &= isValid(root->left, pre);
-            if (!ans || root->val <= pre)
-                return false;
-        }
-        pre = root->val;
-        if (root->right) {
-            ans &= isValid(root->right, pre);
-            if (!ans || root->val >= pre)
-                return false;
-        }
-        return ans;
+        if (root->val <= min_val || root->val >= max_val)
+            return false;
+        return isValid(root->left, min_val, root->val) && isValid(root->right, root->val, max_val);
     }
 };
