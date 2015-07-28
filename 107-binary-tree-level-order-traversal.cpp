@@ -10,24 +10,24 @@
 class Solution {
 public:
     vector<vector<int> > levelOrder(TreeNode *root) {
-        vector<vector<int> > ans;
-        if (root == NULL) return ans;
-        queue<TreeNode*> pre;
-        queue<TreeNode*> next;
-        pre.push(root);
-        while (!pre.empty()) {
-            vector<int> layer;
-            while (!pre.empty()) {
-                TreeNode *now = pre.front();
-                pre.pop();
-                layer.push_back(now->val);
-                if (now->left)
-                    next.push(now->left);
-                if (now->right)
-                    next.push(now->right);
+        vector<vector<int>> ans;
+        if (root == NULL)
+            return ans;
+        queue<TreeNode *> q;
+        q.push(root);
+        while (!q.empty()) {
+            int len = q.size();
+            vector<int> level;
+            while (len--) {
+                TreeNode *pre = q.front();
+                q.pop();
+                level.push_back(pre->val);
+                if (pre->left)
+                    q.push(pre->left);
+                if (pre->right)
+                    q.push(pre->right);
             }
-            ans.push_back(layer);
-            swap(pre, next);
+            ans.push_back(level);
         }
         return ans;
     }
