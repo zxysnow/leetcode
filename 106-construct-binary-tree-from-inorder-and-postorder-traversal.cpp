@@ -10,21 +10,21 @@
 class Solution {
 public:
     TreeNode *buildTree(vector<int> &inorder, vector<int> &postorder) {
-        unordered_map<int, int> m;
-        for (int i = 0; i < inorder.size(); i++)
-            m[inorder[i]] = i;
-        return build(inorder.size() - 1, 0, inorder.size() - 1, postorder, inorder, m);
+        int n = inorder.size();
+        for (int i = 0; i < n; i++)
+            umap[inorder[i]] = i;
+        return build(postorder, n - 1, inorder, 0, n - 1);
     }
 
-private:
-    TreeNode *build(int x, int l, int r, vector<int> &postorder, vector<int> &inorder, unordered_map<int, int> &m) {
-        if (l > r)
+private :
+    unordered_map<int, int> umap;
+    TreeNode* build(vector<int> &postorder, int id, vector<int> &inorder, int l, int r) {
+        if (id < 0 || l > r)
             return NULL;
-        if (l == r)
-            return new TreeNode(inorder[l]);
-        int pos = m[postorder[x]];
-        TreeNode *root = new TreeNode(postorder[x]);
-        root->left = build(x - (r - pos + 1), l, pos - 1, postorder, inorder, m);
-        root->right = build(x - 1, pos + 1, r, postorder, inorder, m);
+        int pos = umap[postorder[id]];
+        TreeNode *root = new TreeNode(postorder[id]);
+        root->right = build(postorder, id - 1, inorder, pos + 1, r);
+        root->left = build(postorder, id - (r - pos) - 1, inorder, l, pos - 1);
+        return root;
     }
 };
