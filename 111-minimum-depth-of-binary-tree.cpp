@@ -9,24 +9,23 @@
  */
 class Solution {
 public:
-    int deep;
-    void findMinDepth(TreeNode *root, int d) {
-        if (root->left == NULL && root->right == NULL) {
-            deep = min(deep, d + 1);
-            return ;
-        }
-        if (d + 1 >= deep)
-            return ;
-        if (root->left)
-            findMinDepth(root->left, d + 1);
-        if (root->right)
-            findMinDepth(root->right, d + 1);
-    }
     int minDepth(TreeNode *root) {
         if (root == NULL)
             return 0;
-        deep = INT_MAX;
-        findMinDepth(root, 0);
-        return deep;
+        findMinDepth(root, 1);
+        return min_depth;
+    }
+
+private :
+    int min_depth = INT_MAX;
+    void findMinDepth(TreeNode *root, int depth) {
+        if (root == NULL || depth >= min_depth)
+            return ;
+        if (root->left == NULL && root->right == NULL) {
+            min_depth = min(min_depth, depth);
+            return ;
+        }
+        findMinDepth(root->left, depth + 1);
+        findMinDepth(root->right, depth + 1);
     }
 };
