@@ -9,25 +9,25 @@
  */
 class Solution {
 public:
-    vector<vector<int> > levelOrderBottom(TreeNode *root) {
-        vector<vector<int> > ans;
-        if (root == NULL) return ans;
-        queue<TreeNode*> pre;
-        queue<TreeNode*> next;
-        pre.push(root);
-        while (!pre.empty()) {
+    vector<vector<int>> levelOrderBottom(TreeNode *root) {
+        vector<vector<int>> ans;
+        if (root == NULL)
+            return ans;
+        queue<TreeNode*> q;
+        q.push(root);
+        while (!q.empty()) {
             vector<int> layer;
-            while (!pre.empty()) {
-                TreeNode *now = pre.front();
-                pre.pop();
-                layer.push_back(now->val);
-                if (now->left)
-                    next.push(now->left);
-                if (now->right)
-                    next.push(now->right);
+            int len = q.size();
+            while (len--) {
+                TreeNode* pre = q.front();
+                q.pop();
+                layer.push_back(pre->val);
+                if (pre->left != NULL)
+                    q.push(pre->left);
+                if (pre->right != NULL)
+                    q.push(pre->right);
             }
             ans.push_back(layer);
-            swap(pre, next);
         }
         reverse(ans.begin(), ans.end());
         return ans;
