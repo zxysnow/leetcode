@@ -20,5 +20,6 @@ public:
             else
                 r--;
         }
+		return ans;
     }
 };
