@@ -1,16 +1,14 @@
 class Solution {
 public:
-    int lengthOfLastWord(const char *s) {
-        if( *s == '\0' )
-            return 0;
-        int ans = (*s++ == ' ' ? 0 : 1);
-        while (*s != '\0') {
-            if (*s != ' ' && *(s-1) == ' ') 
-                ans = 0;
-            if (*s != ' ')
-                ans++;
-            s++;
+    int lengthOfLastWord(string s) {
+        int n = s.size() - 1;
+        while (n >= 0 && s[n] == ' ')
+            n--;
+        int cnt = 0;
+        while (n >= 0 && s[n] != ' ') {
+            cnt++;
+            n--;
         }
-        return ans;
+        return cnt;
     }
 };
