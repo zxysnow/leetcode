@@ -1,33 +1,28 @@
 class Solution {
 public:
     vector<vector<string> > solveNQueens(int n) {
-       vector<string> che(n, string(n, '.'));
-       vector<vector<string> > ans;
-       dfs(0, n, che, ans);
-       return ans;
+        vector<vector<string> > ans;
+        vector<string> state(n, string(n, '.'));
+        int column = 0, ld = 0, rd = 0;
+        dfs(0, state, column, ld, rd, ans);
+        return ans;
     }
-    
+
 private :
-    vector<pair<int, int> > Q;
-    bool place(int x, int i) {
-        for (int k = 0; k < Q.size(); k++)
-            if (x == Q[k].first || i == Q[k].second || abs(Q[k].first - x) == abs(Q[k].second - i))
-                return false;
-        return true;
-    }
-    void dfs(int x, int n, vector<string> &che, vector<vector<string> > &ans) {
-        if (x == n) {
-            ans.push_back(che);
+    void dfs(int x, vector<string> &state, int column, int ld, int rd, vector<vector<string> > &ans) {
+        if (x == state.size()) {
+            ans.push_back(state);
             return ;
         }
-        for (int i = 0; i < n; i++) {
-            if (place(x, i)) {
-                Q.push_back(make_pair(x, i));
-                che[x][i] = 'Q';
-                dfs(x + 1, n, che, ans);
-                che[x][i] = '.';
-                Q.pop_back();
+        for (int i = 0; i < state.size(); i++) {
+            int id = x + i;
+            int id2 = state.size() - x - 1 + i;
+            if ((column & (1 << i)) == 0 && (ld & (1 << id)) == 0 && (rd & (1 << id2)) == 0) {
+                state[x][i] = 'Q';
+                dfs(x + 1, state, column | (1 << i), ld | (1 << id), rd | (1 << id2), ans);
+                state[x][i] = '.';
             }
         }
     }
 };
+
