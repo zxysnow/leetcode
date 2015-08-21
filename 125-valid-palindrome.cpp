@@ -1,20 +1,16 @@
 class Solution {
 public:
-    bool isPalindrome(string s) {
-        int i = 0, k = s.size() - 1;
-        while (i < k) {
-            while (!(isalpha(s[i]) || isdigit(s[i])))
-                i++;
-            while (!(isalpha(s[k]) || isdigit(s[k])))
-                k--;
-            if (i > k)
-                break;
-            if (tolower(s[i]) == tolower(s[k])) {
-                i++;
-                k--;
-                continue;
-            }
-            return false;
+    bool isPalindrome(string& s) {
+        int l = 0, r = s.size() - 1;
+        while (l < r) {
+            while (l < r && !isalpha(s[l]) && !isdigit(s[l]))
+                l++;
+            while (l < r && !isalpha(s[r]) && !isdigit(s[r]))
+                r--;
+            if (tolower(s[l]) != tolower(s[r]))
+                return false;
+            ++l;
+            --r;
         }
         return true;
     }
