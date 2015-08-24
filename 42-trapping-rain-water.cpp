@@ -1,18 +1,17 @@
 class Solution {
 public:
-    int trap(int A[], int n) {
-        if (n == 0)
-            return 0;
-        int lmax = A[0];
-        vector<int> rmax(n);
-        rmax[n - 1] = A[n - 1];
-        for (int i = n - 2; i >= 0; i--)
-            rmax[i] = max(rmax[i + 1], A[i]);
-        int ans = 0;
-        for (int i = 1; i < n - 1; i++) {
-            lmax = max(lmax, A[i]);
-            ans += min(lmax, rmax[i]) - A[i];
+    int trap(vector<int>& height) {
+        int n = height.size();
+        int lmax = 0, rmax = 0, sum = 0, l = 0, r = n - 1;
+        while (l <= r) {
+            lmax = max(lmax, height[l]);
+            rmax = max(rmax, height[r]);
+            if (lmax < rmax) {
+                sum += (lmax - height[l++]);
+            } else {
+                sum += (rmax - height[r--]);
+            }
         }
-        return ans;
+        return sum;
     }
 };
