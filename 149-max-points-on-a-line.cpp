@@ -14,7 +14,7 @@ public:
             return 0;
         int ans = 0;
         for (int i = 0; i < points.size(); i++) {
-            map<double, int> map;
+            unordered_map<double, int> map;
             int same = 0, straight = 0;
             for (int k = 0; k < points.size(); k++) {
                 if (points[i].y == points[k].y && points[i].x == points[k].x) {
@@ -28,10 +28,9 @@ public:
                 double v = (points[i].y - points[k].y) * 1.0 / (points[i].x - points[k].x);
                 map[v]++;
             }
-            ans = max(ans, same);
             ans = max(ans, straight + same);
-            for (auto it = map.begin(); it != map.end(); it++)
-                ans = max(ans, it->second + same);
+            for (auto &ele : map)
+                ans = max(ans, ele.second + same);
         }
         return ans;
     }
