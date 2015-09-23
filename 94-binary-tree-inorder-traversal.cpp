@@ -1,5 +1,5 @@
 /**
- * Definition for binary tree
+ * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
  *     TreeNode *left;
@@ -9,18 +9,21 @@
  */
 class Solution {
 public:
-    vector<int> inorderTraversal(TreeNode *root) {
+    vector<int> inorderTraversal(TreeNode* root) {
         vector<int> ans;
-        inorder(root, ans);
+        stack<TreeNode*> stk;
+        TreeNode *p = root;
+        while (p || !stk.empty()) {
+            if (p) {
+                stk.push(p);
+                p = p->left;
+            } else{
+                p = stk.top();
+                ans.push_back(p->val);
+                stk.pop();
+                p = p->right;
+            }
+        }
         return ans;
-    }
-
-private:
-    void inorder(TreeNode *root, vector<int> &ans) {
-        if (root == NULL)
-            return ;
-        inorder(root->left, ans);
-        ans.push_back(root->val);
-        inorder(root->right, ans);
     }
 };
