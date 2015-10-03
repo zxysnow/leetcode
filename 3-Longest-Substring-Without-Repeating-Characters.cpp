@@ -2,23 +2,19 @@ class Solution {
 public:
     const int N = 260;
     int lengthOfLongestSubstring(string s) {
-        vector<int> in(N, -1);
-        vector<int> dp(s.size());
-        if( s.size() == 0 )
-            return 0;
-        dp[0] = 1;
-        in[s[0]] = 0;
-        int rst = 1;
-        for(int i=1; i<s.size(); i++) {
-            int id = s[i];
-            if( in[id] == -1 ) {
-                dp[i] = dp[i-1] + 1;
+        vector<int> visit(N, -1);
+        int cur_len = 0;
+        int max_len = 0;
+        for (int i = 0; i < s.size(); i++) {
+            int ch = s[i];
+            if (visit[ch] == -1) {
+                cur_len += 1;
             } else {
-                dp[i] = min(dp[i-1] + 1, i - in[id]);
+                cur_len = min(cur_len + 1, i - visit[ch]);
             }
-            rst = max(dp[i], rst);
-            in[id] = i;
+            visit[ch] = i;
+            max_len = max(cur_len, max_len);
         }
-        return rst;
+        return max_len;
     }
 };
