@@ -2,27 +2,27 @@ class Solution {
 public:
     int romanToInt(string s) {
         int ans = 0;
-        string str = "";
         for (int i = 0; i < s.size(); i++) {
-            int v = find(str + s[i]);
-            if (i + 1 < s.size()) {
-                int p = find(str + s[i] + s[i + 1]);
-                if (p != -1) {
-                    v = p;
-                    i++;
-                }
+            int v = find(s[i]);
+            if (i + 1 < s.size() && v < find(s[i + 1])) {
+                ans -= v;
+            } else {
+                ans += v;
             }
-            ans += v;
         }
         return ans;
     }
 private :
-    int find(string s) {
-        string symbol[] = {"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};    
-        int value[] = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        for (int i = 0; i < 13; i++)
-            if (symbol[i] == s)
-                return value[i];
-        return -1;
+    int find(char c) {
+        switch (c) {
+            case 'I':   return 1;
+            case 'V':   return 5;
+            case 'X':   return 10;
+            case 'L':   return 50;
+            case 'C':   return 100;
+            case 'D':   return 500;
+            case 'M':   return 1000;
+            default:    return 0;
+        }
     }
 };
